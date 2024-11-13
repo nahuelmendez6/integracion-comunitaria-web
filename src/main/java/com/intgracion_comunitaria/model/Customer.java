@@ -1,4 +1,5 @@
-package com.integracion_comunitaria.model;
+package com.intgracion_comunitaria.model;
+
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -60,7 +61,8 @@ public class Customer {
     private Date dateUpdate;
 
     public Customer(String name, Date dateYear, String dni, String phone, String email, String address,
-                    String genderType, String city, Double gpsLat, Double gpsLon, Integer idUserCreate, Integer idUserUpdate, Date dateCreate, Date dateUpdate) {
+            String genderType, String city, Double gpsLat, Double gpsLon, Integer idUserCreate, Integer idUserUpdate,
+            Date dateCreate, Date dateUpdate) {
         this.name = name;
         this.dateYear = dateYear;
         this.dni = dni;
@@ -81,7 +83,6 @@ public class Customer {
     }
 
     // Getters y Setters
-
 
     public Integer getId() {
         return id;
