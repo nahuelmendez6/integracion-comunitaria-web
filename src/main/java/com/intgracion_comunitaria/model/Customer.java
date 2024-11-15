@@ -1,7 +1,6 @@
 package com.intgracion_comunitaria.model;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity
@@ -11,20 +10,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_customer")
-    private Integer id;
-
-    @Column(name = "name", length = 100)
-    private String name;
-
-    @Column(name = "date_year")
-    @Temporal(TemporalType.DATE)
-    private Date dateYear;
-
-    @Column(name = "dni", length = 20)
-    private String dni;
-
-    @Column(name = "email", length = 50)
-    private String email;
+    private Integer idCustomer;
 
     @Column(name = "phone", length = 20)
     private String phone;
@@ -32,19 +18,9 @@ public class Customer {
     @Column(name = "adress", length = 50)
     private String address;
 
-    @ManyToOne
-    @JoinColumn(name = "id_gender_type", referencedColumnName = "id_gender")
-    private String genderType;
-
-    @ManyToOne
-    @JoinColumn(name = "id_city", referencedColumnName = "id_city")
-    private String city;
-
-    @Column(name = "gps_lat", precision = 10, scale = 8)
-    private Double gpsLat;
-
-    @Column(name = "gps_lon", precision = 11, scale = 8)
-    private Double gpsLon;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_gender_type", referencedColumnName = "id_gender", foreignKey = @ForeignKey(name = "fk_id_gender_type"))
+    private Gender gender;
 
     @Column(name = "id_user_create")
     private Integer idUserCreate;
@@ -60,68 +36,17 @@ public class Customer {
     @Temporal(TemporalType.DATE)
     private Date dateUpdate;
 
-    public Customer(String name, Date dateYear, String dni, String phone, String email, String address,
-            String genderType, String city, Double gpsLat, Double gpsLon, Integer idUserCreate, Integer idUserUpdate,
-            Date dateCreate, Date dateUpdate) {
-        this.name = name;
-        this.dateYear = dateYear;
-        this.dni = dni;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.genderType = genderType;
-        this.city = city;
-        this.gpsLat = gpsLat;
-        this.gpsLon = gpsLon;
-        this.idUserCreate = idUserCreate;
-        this.idUserUpdate = idUserUpdate;
-        this.dateCreate = dateCreate;
-        this.dateUpdate = dateUpdate;
-    }
-
-    public Customer() {
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user", foreignKey = @ForeignKey(name = "fk_id_user"))
+    private User user;
 
     // Getters y Setters
-
-    public Integer getId() {
-        return id;
+    public Integer getIdCustomer() {
+        return idCustomer;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getDateYear() {
-        return dateYear;
-    }
-
-    public void setDateYear(Date dateYear) {
-        this.dateYear = dateYear;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setIdCustomer(Integer idCustomer) {
+        this.idCustomer = idCustomer;
     }
 
     public String getPhone() {
@@ -140,36 +65,12 @@ public class Customer {
         this.address = address;
     }
 
-    public String getGenderType() {
-        return genderType;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setGenderType(String genderType) {
-        this.genderType = genderType;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public Double getGpsLat() {
-        return gpsLat;
-    }
-
-    public void setGpsLat(Double gpsLat) {
-        this.gpsLat = gpsLat;
-    }
-
-    public Double getGpsLon() {
-        return gpsLon;
-    }
-
-    public void setGpsLon(Double gpsLon) {
-        this.gpsLon = gpsLon;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public Integer getIdUserCreate() {
@@ -202,5 +103,13 @@ public class Customer {
 
     public void setDateUpdate(Date dateUpdate) {
         this.dateUpdate = dateUpdate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

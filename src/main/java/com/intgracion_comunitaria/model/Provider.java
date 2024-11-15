@@ -1,8 +1,6 @@
 package com.intgracion_comunitaria.model;
 
 import jakarta.persistence.*;
-import java.util.Date;
-
 
 @Entity
 @Table(name = "provider")
@@ -10,36 +8,27 @@ public class Provider {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_provider")
-    private Integer id;
+    @Column(name = "id_provider", nullable = false)
+    private Long idProvider;
 
-    @Column(name = "name", length = 45, nullable = false)
+    @Column(name = "name", nullable = false, length = 45)
     private String name;
 
-    @Column(name = "address", length = 45, nullable = false)
-    private String address;
-
-    @Column(name = "gps_lat", nullable = false)
-    private Float gpsLat;
-
-    @Column(name = "gps_long", nullable = false)
-    private Float gpsLong;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_type_provider", referencedColumnName = "id_type_provider", foreignKey = @ForeignKey(name = "fk_typeprovider"))
-    private String typeProvider;
+    private TypeProvider typeProvider;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_category", referencedColumnName = "id_category", foreignKey = @ForeignKey(name = "fk_category"))
-    private String category;
+    private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_grade_provider", referencedColumnName = "id_grade_provider", foreignKey = @ForeignKey(name = "fk_grade_provider"))
     private Integer gradeProvider;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_availability", referencedColumnName = "id_availability", foreignKey = @ForeignKey(name = "fk_availability"))
-    private String availability;
+    private Availability availability;
 
     @Column(name = "id_usercreate")
     private Integer idUserCreate;
@@ -47,31 +36,17 @@ public class Provider {
     @Column(name = "id_userupdate")
     private Integer idUserUpdate;
 
-
-    public Provider(String name, String address, Float gpsLat, Float gpsLong, String typeProvider, String category,
-                    Integer gradeProvider, String availability, Integer idUserCreate, Integer idUserUpdate) {
-        this.name = name;
-        this.address = address;
-        this.gpsLat = gpsLat;
-        this.gpsLong = gpsLong;
-        this.typeProvider = typeProvider;
-        this.category = category;
-        this.gradeProvider = gradeProvider;
-        this.availability = availability;
-        this.idUserCreate = idUserCreate;
-        this.idUserUpdate = idUserUpdate;
-    }
-
-    public Provider() {
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_adress", referencedColumnName = "id_address", foreignKey = @ForeignKey(name = "fk_id_adress_provider"))
+    private Address address;
 
     // Getters y Setters
-    public Integer getId() {
-        return id;
+    public Long getIdProvider() {
+        return idProvider;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdProvider(Long idProvider) {
+        this.idProvider = idProvider;
     }
 
     public String getName() {
@@ -82,43 +57,19 @@ public class Provider {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Float getGpsLat() {
-        return gpsLat;
-    }
-
-    public void setGpsLat(Float gpsLat) {
-        this.gpsLat = gpsLat;
-    }
-
-    public Float getGpsLong() {
-        return gpsLong;
-    }
-
-    public void setGpsLong(Float gpsLong) {
-        this.gpsLong = gpsLong;
-    }
-
-    public String getTypeProvider() {
+    public TypeProvider getTypeProvider() {
         return typeProvider;
     }
 
-    public void setTypeProvider(String typeProvider) {
+    public void setTypeProvider(TypeProvider typeProvider) {
         this.typeProvider = typeProvider;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -130,11 +81,11 @@ public class Provider {
         this.gradeProvider = gradeProvider;
     }
 
-    public String getAvailability() {
+    public Availability getAvailability() {
         return availability;
     }
 
-    public void setAvailability(String availability) {
+    public void setAvailability(Availability availability) {
         this.availability = availability;
     }
 
@@ -152,5 +103,13 @@ public class Provider {
 
     public void setIdUserUpdate(Integer idUserUpdate) {
         this.idUserUpdate = idUserUpdate;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
