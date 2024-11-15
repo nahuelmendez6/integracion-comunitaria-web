@@ -1,10 +1,8 @@
 package com.intgracion_comunitaria.model;
 
-
 import jakarta.persistence.*;
 
 import java.security.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table(name = "gender")
@@ -30,8 +28,8 @@ public class Gender {
     @Column(name = "data_update", nullable = false)
     private Timestamp dataUpdate;
 
-    public Gender(String gender, Integer idUserCreate, Integer idUserUpdate, Timestamp dataCreate, Timestamp dataUpdate)
-    {
+    public Gender(String gender, Integer idUserCreate, Integer idUserUpdate, Timestamp dataCreate,
+            Timestamp dataUpdate) {
         this.gender = gender;
         this.idUserCreate = idUserCreate;
         this.idUserUpdate = idUserUpdate;
