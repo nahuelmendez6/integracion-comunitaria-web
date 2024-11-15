@@ -24,7 +24,7 @@ public class Provider {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_grade_provider", referencedColumnName = "id_grade_provider", foreignKey = @ForeignKey(name = "fk_grade_provider"))
-    private Integer gradeProvider;
+    private GradeProvider gradeProvider;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_availability", referencedColumnName = "id_availability", foreignKey = @ForeignKey(name = "fk_availability"))
@@ -77,11 +77,11 @@ public class Provider {
         this.category = category;
     }
 
-    public Integer getGradeProvider() {
+    public GradeProvider getGradeProvider() {
         return gradeProvider;
     }
 
-    public void setGradeProvider(Integer gradeProvider) {
+    public void setGradeProvider(GradeProvider gradeProvider) {
         this.gradeProvider = gradeProvider;
     }
 

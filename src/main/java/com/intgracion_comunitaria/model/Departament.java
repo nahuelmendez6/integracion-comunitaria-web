@@ -17,11 +17,11 @@ public class Departament {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_country", referencedColumnName = "id_country")
-    private Integer country;
+    private Country country;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_province", referencedColumnName = "id_province")
-    private Integer province;
+    private Province province;
 
     @Column(name = "id_user_create")
     private Integer idUserCreate;
@@ -53,19 +53,19 @@ public class Departament {
         this.nameDepartament = nameDepartament;
     }
 
-    public Integer getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountry(Integer country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 
-    public Integer getProvince() {
+    public Province getProvince() {
         return province;
     }
 
-    public void setProvince(Integer province) {
+    public void setProvince(Province province) {
         this.province = province;
     }
 
@@ -101,4 +101,3 @@ public class Departament {
         this.dataUpdate = dataUpdate;
     }
 }
-

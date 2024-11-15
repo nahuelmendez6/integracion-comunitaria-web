@@ -15,8 +15,8 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Long> 
      */
 
     // Buscar un cliente por su id de usuario
-    Optional<User> findByUserID(Long userID);
+    Optional<User> findByUserId(Long user_id);
 
-    UserProfile findByProfileId(Long profileID);
+    Optional<UserProfile> findProfileByUserId(Long userId);
 
 }

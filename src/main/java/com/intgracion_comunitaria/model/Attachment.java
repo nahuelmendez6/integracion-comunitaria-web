@@ -14,11 +14,11 @@ public class Attachment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_petition", referencedColumnName = "id_petition", nullable = false)
-    private Integer petition;
+    private Petition petition;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_portfolio", referencedColumnName = "id_portfolio", nullable = false)
-    private Integer portfolio;
+    private Portfolio portfolio;
 
     @Column(name = "name", length = 255, nullable = false)
     private String name;
@@ -32,12 +32,10 @@ public class Attachment {
     @Column(name = "id_user_create", nullable = false)
     private Integer idUserCreate;
 
-    @Column(name = "date_create", nullable = false, updatable = false, insertable = false,
-            columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "date_create", nullable = false, updatable = false, insertable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime dateCreate;
 
-    @Column(name = "date_update", nullable = false, insertable = false,
-            columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @Column(name = "date_update", nullable = false, insertable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime dateUpdate;
 
     // Getters y Setters
@@ -50,19 +48,19 @@ public class Attachment {
         this.idAttachment = idAttachment;
     }
 
-    public Integer getPetition() {
+    public Petition getPetition() {
         return petition;
     }
 
-    public void setPetition(Integer petition) {
+    public void setPetition(Petition petition) {
         this.petition = petition;
     }
 
-    public Integer getPortfolio() {
+    public Portfolio getPortfolio() {
         return portfolio;
     }
 
-    public void setPortfolio(Integer portfolio) {
+    public void setPortfolio(Portfolio portfolio) {
         this.portfolio = portfolio;
     }
 

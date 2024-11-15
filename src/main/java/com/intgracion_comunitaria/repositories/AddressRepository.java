@@ -14,24 +14,24 @@ import org.springframework.stereotype.Repository;
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
     // Buscar direcciones por el ID del usuario
-    List<Address> findByUserId(int userId);
+    // List<Address> findByUserId(int userId);
 
     // Buscar direcciones por ciudad
-    List<Address> findByCityName(String cityName);
+    // List<Address> findByCityName(String cityName);
 
     // Buscar direcciones por código postal
-    List<Address> findByPostalCode(String postalCode);
+    // List<Address> findByPostalCode(String postalCode);
 
     // Buscar direcciones por GPS Latitude (coordenadas aproximadas)
-    List<Address> findByGpsLatBetween(BigDecimal startLat, BigDecimal endLat);
+    // List<Address> findByGpsLatBetween(BigDecimal startLat, BigDecimal endLat);
 
     // Buscar direcciones por provincia y país
-    List<Address> findByProvinceAndCountry(Province province, Country country);
+    // List<Address> findByProvinceAndCountry(Province province, Country country);
 
     // Buscar direcciones asociadas a un cliente específico
-    List<Address> findByCustomerId(int customerId);
+    // List<Address> findByCustomerId(int customerId);
 
     // Buscar direcciones asociadas a un proveedor específico
-    List<Address> findByProviderId(int providerId);
+    // List<Address> findByProviderId(int providerId);
 
 }

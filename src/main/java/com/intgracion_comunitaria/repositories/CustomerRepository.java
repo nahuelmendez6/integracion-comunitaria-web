@@ -11,6 +11,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
      */
 
     // Buscar un cliente por su id de usuario
-    Customer findByUserID(Long userID);
+    Customer findByUserId(Long userId);
 
 }

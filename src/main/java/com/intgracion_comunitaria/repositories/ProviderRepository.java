@@ -11,6 +11,6 @@ public interface ProviderRepository extends JpaRepository<Provider, Long> {
      */
 
     // Buscar un proveedor por su ID de usuario
-    Provider findByUserID(Long userID);
+    Provider findByUserId(Long userId);
 
 }

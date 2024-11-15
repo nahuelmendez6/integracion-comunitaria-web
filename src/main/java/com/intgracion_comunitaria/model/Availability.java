@@ -1,6 +1,5 @@
 package com.intgracion_comunitaria.model;
 
-
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 
@@ -21,7 +20,7 @@ public class Availability {
 
     @ManyToOne
     @JoinColumn(name = "id_week", referencedColumnName = "id_week", foreignKey = @ForeignKey(name = "week"))
-    private Integer week;
+    private Week week;
 
     @ManyToOne
     @JoinColumn(name = "id_provider", referencedColumnName = "id_provider", foreignKey = @ForeignKey(name = "provider"))
@@ -39,8 +38,8 @@ public class Availability {
     @Column(name = "date_update", nullable = false)
     private Timestamp dateUpdate;
 
-    public Availability(String fromHour, String untilHour, Integer week, Provider provider, Integer idUserCreate,
-                        Integer idUserUpdate, Timestamp dateCreate, Timestamp dateUpdate) {
+    public Availability(String fromHour, String untilHour, Week week, Provider provider, Integer idUserCreate,
+            Integer idUserUpdate, Timestamp dateCreate, Timestamp dateUpdate) {
         this.fromHour = fromHour;
         this.untilHour = untilHour;
         this.week = week;
@@ -79,11 +78,11 @@ public class Availability {
         this.untilHour = untilHour;
     }
 
-    public Integer getWeek() {
+    public Week getWeek() {
         return week;
     }
 
-    public void setWeek(Integer week) {
+    public void setWeek(Week week) {
         this.week = week;
     }
 
@@ -127,4 +126,3 @@ public class Availability {
         this.dateUpdate = dateUpdate;
     }
 }
-

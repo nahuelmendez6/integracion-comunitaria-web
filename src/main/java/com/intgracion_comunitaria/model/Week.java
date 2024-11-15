@@ -18,7 +18,7 @@ public class Week {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_type_jornal")
-    private Integer typeJornal;
+    private TypeJornal typeJornal;
 
     @Column(name = "id_user_create")
     private Integer idUserCreate;
@@ -53,11 +53,11 @@ public class Week {
         this.name = name;
     }
 
-    public Integer getTypeJornal() {
+    public TypeJornal getTypeJornal() {
         return typeJornal;
     }
 
-    public void setTypeJornal(Integer typeJornal) {
+    public void setTypeJornal(TypeJornal typeJornal) {
         this.typeJornal = typeJornal;
     }
 
@@ -101,4 +101,3 @@ public class Week {
         this.hours = hours;
     }
 }
-

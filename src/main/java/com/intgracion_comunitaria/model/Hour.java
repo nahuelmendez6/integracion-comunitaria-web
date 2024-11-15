@@ -17,7 +17,7 @@ public class Hour {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_week", nullable = false)
-    private Integer week;
+    private Week week;
 
     @Column(name = "id_user_create", length = 45)
     private String idUserCreate;
@@ -49,11 +49,11 @@ public class Hour {
         this.name = name;
     }
 
-    public Integer getWeek() {
+    public Week getWeek() {
         return week;
     }
 
-    public void setWeek(Integer week) {
+    public void setWeek(Week week) {
         this.week = week;
     }
 
@@ -89,4 +89,3 @@ public class Hour {
         this.dateUpdate = dateUpdate;
     }
 }
-

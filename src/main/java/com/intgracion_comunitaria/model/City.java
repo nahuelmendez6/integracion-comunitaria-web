@@ -1,6 +1,5 @@
 package com.intgracion_comunitaria.model;
 
-
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 
@@ -18,7 +17,7 @@ public class City {
 
     @ManyToOne
     @JoinColumn(name = "id_department", referencedColumnName = "id_departament", foreignKey = @ForeignKey(name = "departament"))
-    private Integer department;
+    private Departament department;
 
     @Column(name = "postal_code", length = 10)
     private String postalCode;
@@ -35,9 +34,8 @@ public class City {
     @Column(name = "date_update", nullable = false)
     private Timestamp dateUpdate;
 
-
-    public City(String name, Integer department, String postalCode, Integer idUserUpdate, Integer idUserCreate,
-                Timestamp dateCreate, Timestamp dateUpdate) {
+    public City(String name, Departament department, String postalCode, Integer idUserUpdate, Integer idUserCreate,
+            Timestamp dateCreate, Timestamp dateUpdate) {
         this.name = name;
         this.department = department;
         this.postalCode = postalCode;
@@ -67,11 +65,11 @@ public class City {
         this.name = name;
     }
 
-    public Integer getDepartment() {
+    public Departament getDepartment() {
         return department;
     }
 
-    public void setDepartment(Integer department) {
+    public void setDepartment(Departament department) {
         this.department = department;
     }
 
