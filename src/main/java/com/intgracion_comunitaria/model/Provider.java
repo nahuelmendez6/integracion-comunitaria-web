@@ -40,6 +40,10 @@ public class Provider {
     @JoinColumn(name = "id_adress", referencedColumnName = "id_address", foreignKey = @ForeignKey(name = "fk_id_adress_provider"))
     private Address address;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user", foreignKey = @ForeignKey(name = "fk_id_user"))
+    private User user;
+
     // Getters y Setters
     public Long getIdProvider() {
         return idProvider;
@@ -111,5 +115,9 @@ public class Provider {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
