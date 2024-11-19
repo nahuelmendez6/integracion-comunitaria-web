@@ -2,6 +2,9 @@ package com.intgracion_comunitaria.services;
 
 import com.intgracion_comunitaria.model.User;
 import com.intgracion_comunitaria.repositories.UserRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
 
     // Inyeccion de dependencias

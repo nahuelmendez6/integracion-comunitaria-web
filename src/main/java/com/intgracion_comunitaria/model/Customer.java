@@ -18,7 +18,7 @@ public class Customer {
     @Column(name = "adress", length = 50)
     private String address;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_gender_type", referencedColumnName = "id_gender", foreignKey = @ForeignKey(name = "fk_id_gender_type"))
     private Gender gender;
 
@@ -36,7 +36,7 @@ public class Customer {
     @Temporal(TemporalType.DATE)
     private Date dateUpdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", referencedColumnName = "id_user", foreignKey = @ForeignKey(name = "fk_id_user"))
     private User user;
 

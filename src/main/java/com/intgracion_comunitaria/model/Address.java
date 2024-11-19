@@ -10,7 +10,7 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_address")
-    private Integer idAddress;
+    private Long idAddress;
 
     @Column(name = "street", nullable = false, length = 100)
     private String street;
@@ -56,11 +56,11 @@ public class Address {
     private Provider provider;
 
     // Getters y Setters
-    public Integer getIdAddress() {
+    public Long getIdAddress() {
         return idAddress;
     }
 
-    public void setIdAddress(Integer idAddress) {
+    public void setIdAddress(Long idAddress) {
         this.idAddress = idAddress;
     }
 

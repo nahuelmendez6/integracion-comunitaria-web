@@ -19,18 +19,20 @@ public class SecurityConfig {
     }
 
     // Configuración de seguridad HTTP
-    @SuppressWarnings({ "deprecation", "removal", "removal" })
+    @SuppressWarnings({ "deprecation", "removal" })
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .requestMatchers("/register", "/css/**", "/js/**", "/images/**").permitAll() // Permitir acceso sin
-                                                                                             // autenticación
+                .requestMatchers("/register", "/login", "/css/**", "/js/**", "/images/**").permitAll() // Permitir
+                                                                                                       // acceso sin
+                // autenticación
                 .anyRequest().authenticated() // El resto de las rutas requieren autenticación
                 .and()
                 .formLogin()
-                .loginPage("/login") // Página de login personalizada (si la tienes)
+                .loginPage("/login") // Página de login personalizada
                 .permitAll() // Permitir acceso a la página de login
+                .defaultSuccessUrl("/home", true)
                 .and()
                 .logout()
                 .permitAll(); // Permitir logout

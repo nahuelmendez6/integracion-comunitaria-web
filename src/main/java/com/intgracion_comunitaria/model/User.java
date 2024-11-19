@@ -1,6 +1,5 @@
 package com.intgracion_comunitaria.model;
 
-
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -51,7 +50,7 @@ public class User {
     private Date dateUpdate;
 
     public User(String name, String email, String lastName, String password, Integer group, String token,
-                Date dateToken, Integer idUserCreate, Integer idUserUpdate, Date dateCreate, Date dateUpdate) {
+            Date dateToken, Integer idUserCreate, Integer idUserUpdate, Date dateCreate, Date dateUpdate) {
         this.name = name;
         this.email = email;
         this.lastName = lastName;

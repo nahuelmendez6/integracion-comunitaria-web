@@ -40,7 +40,7 @@ public class Provider {
     @JoinColumn(name = "id_adress", referencedColumnName = "id_address", foreignKey = @ForeignKey(name = "fk_id_adress_provider"))
     private Address address;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", referencedColumnName = "id_user", foreignKey = @ForeignKey(name = "fk_id_user"))
     private User user;
 
