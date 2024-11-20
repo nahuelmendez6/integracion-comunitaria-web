@@ -1,22 +1,11 @@
 package com.intgracion_comunitaria.repositories;
 
-import com.intgracion_comunitaria.model.User;
 import com.intgracion_comunitaria.model.UserProfile;
-
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
-
-    /*
-     * CustomerRepository interactua con la tabla customer y permite buscar un
-     * cliente a partir del id de usuario
-     */
-
-    // Buscar un cliente por su id de usuario
-    Optional<User> findByUserId(Long user_id);
-
-    Optional<UserProfile> findProfileByUserId(Long userId);
-
+    // Método para obtener el perfil de usuario por el id del usuario
+    UserProfile findByUserId(Integer userId);
 }

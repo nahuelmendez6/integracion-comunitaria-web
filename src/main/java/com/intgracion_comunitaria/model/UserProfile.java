@@ -22,7 +22,7 @@ public class UserProfile {
     @Column(name = "role_type", columnDefinition = "ENUM('cliente', 'proveedor', 'ambos') DEFAULT 'cliente'")
     private RoleType roleType;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id_user", nullable = false)
     private User user;
 

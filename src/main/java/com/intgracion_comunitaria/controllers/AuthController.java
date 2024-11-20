@@ -1,7 +1,10 @@
 package com.intgracion_comunitaria.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
+
 import com.intgracion_comunitaria.model.User;
 import com.intgracion_comunitaria.model.UserProfile;
-import com.intgracion_comunitaria.services.AuthService;
+
 import com.intgracion_comunitaria.services.UserRegistrationService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,8 +30,13 @@ public class AuthController {
     @Autowired
     private UserRegistrationService userRegistrationService;
 
-    @Autowired
-    private AuthService authService;
+    @GetMapping("/home")
+    public String home(Authentication authentication, Model model) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            model.addAttribute("username", authentication.getName()); // Agregar el nombre de usuario al modelo
+        }
+        return "home"; // Redirige a la página de inicio si el usuario está autenticado
+    }
 
     // Endpoint para mostrar el formulario de registro
     @GetMapping("/register")
@@ -44,46 +53,13 @@ public class AuthController {
         userRegistrationService.registerUser(user, roleType, null);
 
         // Redirigir al login
-        return "login";
+        return "redirect:/login";
     }
 
     // Mostrar formulario de login
-
     @GetMapping("/login")
-    public String showLoginForm(Authentication authentication) {
-        // Verificar si el usuario ya esta autenticado
-        if (authentication != null) {
-            return "home";
-        }
-        return "login"; // Devuelve la vista login.html
-    }
-
-    // Procesar la solicitud de login
-    @PostMapping("/login")
-    public String login(@RequestParam("email") String email,
-            @RequestParam("password") String password,
-            Model model,
-            HttpServletRequest request) {
-
-        // Llamamos al servicio de autenticacion
-
-        Optional<User> userOptional = authService.authenticate(email, password);
-
-        // Si la autenticacion es exitosa
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-
-            // Aca se puede guardar al usuario en el contexto de seguridad
-            // SecurityContextHolder.getContext().setAuthentication(auth); Configurar Sring
-            // Security
-
-            return "home";
-
-        } else {
-            model.addAttribute("error", "Credenciales incorrectas.");
-            return "login"; // Si la autenticacion falla, vuelve a mostrar el login
-        }
-
+    public String login() {
+        return "login"; // Devuelve la vista de login
     }
 
 }
