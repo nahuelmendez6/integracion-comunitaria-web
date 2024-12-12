@@ -62,20 +62,20 @@ public class UserRegistrationService {
 
         // Paso 4: Crear el perfil de cliente o proveedor
         switch (roleType) {
-            case CLIENTE:
+            case cliente:
                 Customer customer = new Customer();
                 customer.setUser(user);
                 customerRepository.save(customer);
                 break;
 
-            case PROVEEDOR:
+            case proveedor:
                 Provider provider = new Provider();
                 provider.setUser(user);
                 provider.setName(user.getName());
                 providerRepository.save(provider);
                 break;
 
-            case AMBOS:
+            case ambos:
                 Customer customerBoth = new Customer();
                 customerBoth.setUser(user);
                 customerRepository.save(customerBoth);

@@ -14,21 +14,17 @@ public class Provider {
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_type_provider", referencedColumnName = "id_type_provider", foreignKey = @ForeignKey(name = "fk_typeprovider"))
     private TypeProvider typeProvider;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_category", referencedColumnName = "id_category", foreignKey = @ForeignKey(name = "fk_category"))
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_grade_provider", referencedColumnName = "id_grade_provider", foreignKey = @ForeignKey(name = "fk_grade_provider"))
     private GradeProvider gradeProvider;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_availability", referencedColumnName = "id_availability", foreignKey = @ForeignKey(name = "fk_availability"))
-    private Availability availability;
 
     @Column(name = "id_usercreate")
     private Integer idUserCreate;
@@ -36,13 +32,17 @@ public class Provider {
     @Column(name = "id_userupdate")
     private Integer idUserUpdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_adress", referencedColumnName = "id_address", foreignKey = @ForeignKey(name = "fk_id_adress_provider"))
     private Address address;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_user", referencedColumnName = "id_user", foreignKey = @ForeignKey(name = "fk_id_user"))
     private User user;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_profession", referencedColumnName = "id_profession", foreignKey = @ForeignKey(name = "fk_id_profession"))
+    private Profession profession;
 
     // Getters y Setters
     public Long getIdProvider() {
@@ -85,14 +85,6 @@ public class Provider {
         this.gradeProvider = gradeProvider;
     }
 
-    public Availability getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(Availability availability) {
-        this.availability = availability;
-    }
-
     public Integer getIdUserCreate() {
         return idUserCreate;
     }
@@ -119,5 +111,17 @@ public class Provider {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Profession getProfession() {
+        return profession;
+    }
+
+    public void setProfession(Profession profession) {
+        this.profession = profession;
     }
 }

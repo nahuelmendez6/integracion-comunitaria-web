@@ -12,11 +12,13 @@ public class Availability {
     @Column(name = "id_availability")
     private Integer id;
 
-    @Column(name = "id_from_hour", length = 11)
-    private String fromHour;
+    @ManyToOne
+    @JoinColumn(name = "id_from_hour", referencedColumnName = "id_hour", foreignKey = @ForeignKey(name = "fromHour"))
+    private Hour fromHour;
 
-    @Column(name = "id_until_hour", length = 11)
-    private String untilHour;
+    @ManyToOne
+    @JoinColumn(name = "id_until_hour", referencedColumnName = "id_hour", foreignKey = @ForeignKey(name = "untilHour"))
+    private Hour untilHour;
 
     @ManyToOne
     @JoinColumn(name = "id_week", referencedColumnName = "id_week", foreignKey = @ForeignKey(name = "week"))
@@ -38,7 +40,7 @@ public class Availability {
     @Column(name = "date_update", nullable = false)
     private Timestamp dateUpdate;
 
-    public Availability(String fromHour, String untilHour, Week week, Provider provider, Integer idUserCreate,
+    public Availability(Hour fromHour, Hour untilHour, Week week, Provider provider, Integer idUserCreate,
             Integer idUserUpdate, Timestamp dateCreate, Timestamp dateUpdate) {
         this.fromHour = fromHour;
         this.untilHour = untilHour;
@@ -62,19 +64,19 @@ public class Availability {
         this.id = id;
     }
 
-    public String getFromHour() {
+    public Hour getFromHour() {
         return fromHour;
     }
 
-    public void setFromHour(String fromHour) {
+    public void setFromHour(Hour fromHour) {
         this.fromHour = fromHour;
     }
 
-    public String getUntilHour() {
+    public Hour getUntilHour() {
         return untilHour;
     }
 
-    public void setUntilHour(String untilHour) {
+    public void setUntilHour(Hour untilHour) {
         this.untilHour = untilHour;
     }
 

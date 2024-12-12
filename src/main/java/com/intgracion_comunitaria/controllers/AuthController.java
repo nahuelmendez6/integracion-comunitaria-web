@@ -49,7 +49,7 @@ public class AuthController {
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user, @RequestParam String role) {
         // Llamada al servicio para registrar al usuario con su rol
-        UserProfile.RoleType roleType = UserProfile.RoleType.valueOf(role.toUpperCase());
+        UserProfile.RoleType roleType = UserProfile.RoleType.valueOf(role.toLowerCase());
         userRegistrationService.registerUser(user, roleType, null);
 
         // Redirigir al login

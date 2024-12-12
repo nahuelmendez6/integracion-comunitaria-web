@@ -49,8 +49,12 @@ public class User {
     @Temporal(TemporalType.DATE)
     private Date dateUpdate;
 
+    @Column(name = "profile_picture")
+    private String profilePicture;
+
     public User(String name, String email, String lastName, String password, Integer group, String token,
-            Date dateToken, Integer idUserCreate, Integer idUserUpdate, Date dateCreate, Date dateUpdate) {
+            Date dateToken, Integer idUserCreate, Integer idUserUpdate, Date dateCreate, Date dateUpdate,
+            String profilePicture) {
         this.name = name;
         this.email = email;
         this.lastName = lastName;
@@ -62,6 +66,7 @@ public class User {
         this.idUserUpdate = idUserUpdate;
         this.dateCreate = dateCreate;
         this.dateUpdate = dateUpdate;
+        this.profilePicture = profilePicture;
     }
 
     public User() {
@@ -163,4 +168,13 @@ public class User {
     public void setDateUpdate(Date dateUpdate) {
         this.dateUpdate = dateUpdate;
     }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
 }

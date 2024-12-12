@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
     // Método para obtener el perfil de usuario por el id del usuario
     UserProfile findByUserId(Integer userId);
+
+    // UserProfile findByEmail(String userEmail);
 }

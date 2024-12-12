@@ -12,8 +12,8 @@ public class UserProfile {
     @Column(name = "id_profile")
     private Integer idProfile;
 
-    @Column(name = "email", length = 150)
-    private String email;
+    // @Column(name = "email", length = 150)
+    // private String email;
 
     @Column(name = "is_admin", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isAdmin;
@@ -40,7 +40,7 @@ public class UserProfile {
 
     // Enum para los tipos de rol
     public enum RoleType {
-        CLIENTE, PROVEEDOR, AMBOS
+        cliente, proveedor, ambos
     }
 
     // Getters y Setters
@@ -53,13 +53,15 @@ public class UserProfile {
         this.idProfile = idProfile;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    /*
+     * public String getEmail() {
+     * return email;
+     * }
+     * 
+     * public void setEmail(String email) {
+     * this.email = email;
+     * }
+     */
 
     public Boolean getIsAdmin() {
         return isAdmin;
