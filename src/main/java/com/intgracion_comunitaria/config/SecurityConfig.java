@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.intgracion_comunitaria.services.CustomUserDetailsService;
 
@@ -42,7 +44,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .requestMatchers("/register", "/login", "/favicon.ico", "/error").permitAll()
+                .requestMatchers("/register", "/login", "/favicon.ico", "/error", "/uploads/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login")
@@ -57,4 +59,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }

@@ -15,14 +15,22 @@ import com.intgracion_comunitaria.services.UserService;
 import com.intgracion_comunitaria.services.WeekService;
 
 import org.springframework.web.multipart.MultipartFile;
-import java.nio.file.*;
+
 import jakarta.persistence.criteria.Path;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +70,9 @@ public class ProfileController {
     @Autowired
     private AvailabilityService availabilityService;
 
+    // Ruta donde se guardarán las fotos
+    private static final String UPLOAD_DIR = "src/main/resources/static/uploads/";
+
     @GetMapping("/profile")
     public String viewProfile(Authentication authentication, Model model) {
         // Obtén el usuario autenticado
@@ -91,6 +102,7 @@ public class ProfileController {
             }
 
             model.addAttribute("provider", provider);
+            model.addAttribute("user", user);
             return "prover_profile"; // Template del proveedor
 
         }
@@ -152,37 +164,45 @@ public class ProfileController {
 
     }
 
-    @PostMapping("/upload-photo")
-    public String uploadProfilePicture(@RequestParam("profilePicture") MultipartFile file,
-            @AuthenticationPrincipal UserDetails userDetails,
-            RedirectAttributes redirectAttributes) {
-        try {
-            // Obtener usuario actual
-            User user = userService.findByUsername(userDetails.getUsername());
+    @PostMapping("/upload/photo")
+    public String uploadProfilePicture(@RequestParam("file") MultipartFile file,
+            Authentication authentication) {
+        // Obtén el usuario autenticado
+        String userEmail = authentication.getName(); // Correo del usuario autenticado
+        Optional<User> userOptional = userRepository.findByEmail(userEmail);
 
-            // Validar que el archivo no esté vacío
-            if (file.isEmpty()) {
-                redirectAttributes.addFlashAttribute("error", "El archivo está vacío.");
-                return "redirect:/profile";
+        if (userOptional.isEmpty()) {
+            // Usuario no encontrado
+            return "redirect:/error?message=Usuario no encontrado";
+        }
+
+        User user = userOptional.get();
+        UserProfile userProfile = userProfileRepository.findByUserId(user.getId());
+
+        try {
+            String uploadDir = UPLOAD_DIR;
+            File uploadDirectory = new File(uploadDir);
+
+            if (!uploadDirectory.exists()) {
+                uploadDirectory.mkdirs();
             }
 
-            // Generar nombre único para el archivo
-            String filename = user.getId() + "_" + file.getOriginalFilename();
+            // Generar nombre unico para cada imagen
+            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
-            // Guardar archivo en una carpeta (por ejemplo, en /uploads)
-            java.nio.file.Path path = Paths.get("uploads/" + filename);
-            Files.createDirectories(path.getParent());
-            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            String filePath = Paths.get(uploadDir, fileName).toString();
+            Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
 
-            // Guardar el nombre del archivo en la base de datos
-            user.setProfilePicture(filename);
-            userService.save(user);
+            if (user != null) {
+                user.setProfilePicture(fileName);
+                userRepository.save(user);
+            }
 
-            redirectAttributes.addFlashAttribute("success", "Foto de perfil actualizada con éxito.");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Ocurrió un error al subir la foto.");
+            return "redirect:/profile";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/viewProfile?error=true";
         }
-        return "redirect:/profile";
     }
 
     @PostMapping("/update")

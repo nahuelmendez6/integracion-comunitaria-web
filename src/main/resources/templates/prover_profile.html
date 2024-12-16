@@ -61,10 +61,11 @@
     </nav>
 
     <!-- Sección de perfil -->
-    <div class="container mt-5">
+    <div class="container mt-5 d-flex flex-row">
         <!-- Encabezado del perfil -->
         <div class="profile-header">
-            <img src="/uploads/${user.profilePicture}" alt="Foto de perfil">
+            <img th:src="@{'/uploads/' + ${user.profilePicture}}" alt="Profile Picture">
+
             <h2 class="mt-3" th:text="${provider.name}">Nombre del Usuario</h2>
             <p class="text-muted" th:text="${provider.user.email}">Correo: usuario@example.com</p>
         </div>
@@ -74,52 +75,26 @@
             <div class="col-md-8 offset-md-2">
                 <p>perfil de proveedor</p>
                 <div>
+                    <!-- Mostrar categoría -->
                     <div>
-                        <span th:text="${provider.category}">Categoría</span>
+                        <span th:text="${provider.category.name}">Categoría</span>
                     </div>
+                
+                    <!-- Mostrar tipo de proveedor -->
+                    <div>
+                        <span th:text="${provider.typeProvider.type}">Tipo de proveedor</span>
+                    </div>
+                
+                    <!-- Mostrar profesión -->
+                    <div>
+                        <span th:text="${provider.profession.name}">Profesión</span>
+                    </div>
+                
+                    <!-- Enlace para editar el perfil -->
                     <li class="btn">
                         <a class="nav-link" href="/edit_profile">Editar perfil</a>
                     </li>
                 </div>
-                <!-- <form class="profile-form" action="/profile/edit" method="POST"> -->
-                  
-                  <!--
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" name="name" value="${profile.name}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="category" class="form-label">Categoría</label>
-                        <input type="text" class="form-control" id="category" name="category" value="${profile.category}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="profession" class="form-label">Profesión</label>
-                        <input type="text" class="form-control" id="profession" name="profession" value="${profile.profession}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="address" name="address" value="${profile.address}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="zone" class="form-label">Zona</label>
-                        <input type="text" class="form-control" id="zone" name="zone" value="${profile.zone}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="daysAvailable" class="form-label">Días Disponibles</label>
-                        <input type="text" class="form-control" id="daysAvailable" name="daysAvailable" value="${profile.daysAvailable}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="fromHour" class="form-label">Hora de Inicio</label>
-                        <input type="text" class="form-control" id="fromHour" name="fromHour" value="${profile.fromHour}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="untilHour" class="form-label">Hora de Finalización</label>
-                        <input type="text" class="form-control" id="untilHour" name="untilHour" value="${profile.untilHour}">
-                    </div>
-                    <div class="save-button">
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                    </div>-->
-                <!-- </form> -->
             </div>
         </div>
     </div>
