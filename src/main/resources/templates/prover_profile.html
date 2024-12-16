@@ -25,9 +25,19 @@
             font-weight: bold;
         }
 
-        .save-button {
-            text-align: center;
-            margin-top: 20px;
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .section-header h4 {
+            margin: 0;
         }
     </style>
 </head>
@@ -43,60 +53,137 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/profile">Perfil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Cerrar sesión</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/settings">Configuración</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/home">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/profile">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Cerrar sesión</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/settings">Configuración</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Sección de perfil -->
-    <div class="container mt-5 d-flex flex-row">
+    <div class="container mt-5">
         <!-- Encabezado del perfil -->
         <div class="profile-header">
             <img th:src="@{'/uploads/' + ${user.profilePicture}}" alt="Profile Picture">
-
             <h2 class="mt-3" th:text="${provider.name}">Nombre del Usuario</h2>
             <p class="text-muted" th:text="${provider.user.email}">Correo: usuario@example.com</p>
         </div>
 
-        <!-- Formulario de edición de perfil -->
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <p>perfil de proveedor</p>
-                <div>
-                    <!-- Mostrar categoría -->
-                    <div>
-                        <span th:text="${provider.category.name}">Categoría</span>
-                    </div>
-                
-                    <!-- Mostrar tipo de proveedor -->
-                    <div>
-                        <span th:text="${provider.typeProvider.type}">Tipo de proveedor</span>
-                    </div>
-                
-                    <!-- Mostrar profesión -->
-                    <div>
-                        <span th:text="${provider.profession.name}">Profesión</span>
-                    </div>
-                
-                    <!-- Enlace para editar el perfil -->
-                    <li class="btn">
-                        <a class="nav-link" href="/edit_profile">Editar perfil</a>
-                    </li>
+        <!-- Datos personales -->
+        <div class="section">
+            <div class="section-header">
+                <h4>Datos personales</h4>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonalModal">Editar</button>
+            </div>
+            <p><strong>Nombre:</strong> <span th:text="${provider.name}">John Doe</span></p>
+            <p><strong>Email:</strong> <span th:text="${provider.user.email}">usuario@example.com</span></p>
+        </div>
+
+        <!-- Datos de proveedor -->
+        <div class="section">
+            <div class="section-header">
+                <h4>Datos de proveedor</h4>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editProviderModal">Editar</button>
+            </div>
+            
+            <p><strong>Categoría:</strong> <span th:text="${provider.category.name}">Categoría</span></p>
+            <p><strong>Tipo de proveedor:</strong> <span th:text="${provider.typeProvider.type}">Tipo</span></p>
+            <p><strong>Profesión:</strong> <span th:text="${provider.profession.name}">Profesión</span></p>
+        </div>
+
+        <!-- Disponibilidad -->
+        <div class="section">
+            <div class="section-header">
+                <h4>Disponibilidad</h4>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editAvailabilityModal">Editar</button>
+            </div>
+            <p>A completar...</p>
+        </div>
+
+        <!-- Zona -->
+        <div class="section">
+            <div class="section-header">
+                <h4>Zona</h4>
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editZoneModal">Editar</button>
+            </div>
+            <p>A completar...</p>
+        </div>
+    </div>
+
+    <!-- Modal para editar datos de proveedor -->
+    <div class="modal fade" id="editProviderModal" tabindex="-1" aria-labelledby="editProviderModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProviderModalLabel">Editar Datos de Proveedor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="profile-form" action="/update" method="POST">
+                        <input type="hidden" name="idProvider" th:value="${provider.idProvider}" />
+                        <!-- Nombre -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="name" th:value="${provider.name}" required>
+                        </div>
+                        <!-- Categoría -->
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Categoría</label>
+                            <select class="form-control" id="category" name="category.id">
+                                <option value="">Seleccione una categoría</option>
+                                <th:block th:each="category : ${categories}">
+                                    <option th:value="${category.id}" th:text="${category.name}"
+                                            th:selected="${provider.category != null && provider.category.id == category.id}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <!-- Profesión -->
+                        <div class="mb-3">
+                            <label for="profession" class="form-label">Profesión</label>
+                            <select class="form-control" id="profession" name="profession.idProfession">
+                                <option value="">Seleccione una profesión</option>
+                                <th:block th:each="profession : ${professions}">
+                                    <option th:value="${profession.idProfession}" th:text="${profession.name}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <!-- Tipo de proveedor -->
+                        <div class="mb-3">
+                            <label for="type_providers" class="form-label">Tipo de proveedor</label>
+                            <select class="form-control" id="type_providers" name="typeProvider.id">
+                                <option value="">Seleccione el tipo de proveedor</option>
+                                <th:block th:each="type_provider : ${type_providers}">
+                                    <option th:value="${type_provider.id}" th:text="${type_provider.type}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <!-- Tipo de jornada -->
+                        <div class="mb-3">
+                            <label for="type_jornals" class="form-label">Tipo de jornada</label>
+                            <select class="form-control" id="type_jornals" name="type_jornal.id_type_jornal">
+                                <option value="">Seleccione el tipo de jornada</option>
+                                <th:block th:each="type_jornal : ${type_jornals}">
+                                    <option th:value="${type_jornal.id_type_jornal}" th:text="${type_jornal.name}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Modal para editar disponibilidad (placeholder) -->
+    <div class="modal fade" id="editAvailabilityModal" tabindex="-1" aria-labelledby="editAvailabilityModalLabel" aria-hidden="true">
+        <!-- Contenido del modal -->
+    </div>
+
+    <!-- Modal para editar zona (placeholder) -->
+    <div class="modal fade" id="editZoneModal" tabindex="-1" aria-labelledby="editZoneModalLabel" aria-hidden="true">
+        <!-- Contenido del modal -->
     </div>
 
     <!-- Bootstrap JS -->

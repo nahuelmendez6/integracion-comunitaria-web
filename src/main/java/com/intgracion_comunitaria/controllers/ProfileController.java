@@ -103,6 +103,14 @@ public class ProfileController {
 
             model.addAttribute("provider", provider);
             model.addAttribute("user", user);
+            model.addAttribute("provider", provider);
+            model.addAttribute("categories", providerService.getAllCategories());
+            model.addAttribute("professions", providerService.getAllProfessions());
+            model.addAttribute("type_providers", providerService.getAllTypeProviders());
+            model.addAttribute("type_jornals", providerService.getAllTypeJornals());
+            model.addAttribute("weeks", weekService.getAllWeeks());
+            model.addAttribute("hours", hourService.getAllHours());
+            // model.addAttribute("availability", availability);
             return "prover_profile"; // Template del proveedor
 
         }
