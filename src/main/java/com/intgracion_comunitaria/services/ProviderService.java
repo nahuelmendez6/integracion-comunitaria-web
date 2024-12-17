@@ -64,7 +64,7 @@ public class ProviderService {
         existingProvider.setCategory(provider.getCategory());
         existingProvider.setProfession(provider.getProfession());
         existingProvider.setTypeProvider(provider.getTypeProvider());
-        existingProvider.setGradeProvider(provider.getGradeProvider());
+        existingProvider.setTypeJornal(provider.getTypeJornal());
         // Add any additional fields you want to update
 
         providerRepository.save(existingProvider);

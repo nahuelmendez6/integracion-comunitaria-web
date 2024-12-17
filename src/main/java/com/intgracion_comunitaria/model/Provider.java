@@ -44,6 +44,10 @@ public class Provider {
     @JoinColumn(name = "id_profession", referencedColumnName = "id_profession", foreignKey = @ForeignKey(name = "fk_id_profession"))
     private Profession profession;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_type_jornal", referencedColumnName = "id_type_jornal", foreignKey = @ForeignKey(name = "fk_type_jornal"))
+    private TypeJornal typeJornal;
+
     // Getters y Setters
     public Long getIdProvider() {
         return idProvider;
@@ -123,5 +127,13 @@ public class Provider {
 
     public void setProfession(Profession profession) {
         this.profession = profession;
+    }
+
+    public TypeJornal getTypeJornal() {
+        return typeJornal;
+    }
+
+    public void setTypeJornal(TypeJornal typeJornal) {
+        this.typeJornal = typeJornal;
     }
 }
