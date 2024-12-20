@@ -2,6 +2,7 @@ package com.intgracion_comunitaria.controllers;
 
 import com.intgracion_comunitaria.model.User;
 import com.intgracion_comunitaria.model.UserProfile;
+import com.intgracion_comunitaria.model.Week;
 import com.intgracion_comunitaria.repositories.ProviderRepository;
 import com.intgracion_comunitaria.repositories.UserProfileRepository;
 import com.intgracion_comunitaria.repositories.UserRepository;
@@ -24,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -216,21 +218,31 @@ public class ProfileController {
     @PostMapping("/update")
     public String updateProfile(
             @ModelAttribute("provider") Provider provider,
-            @RequestParam Map<String, String> availabilityData,
             RedirectAttributes redirectAttributes) {
 
         try {
             // Actualizar el proveedor
             providerService.updateProvider(provider);
 
-            // Expresión regular para validar el formato de las claves
-            // String availabilityPattern =
-            // "availabilities\\[\\d+\\]\\.(fromHour|untilHour|week)\\.id";
+            redirectAttributes.addFlashAttribute("successMessage", "Perfil actualizado correctamente");
+            return "redirect:/profile";
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar el perfil: " + e.getMessage());
+            return "redirect:/edit_profile";
+        }
+    }
 
-            // Procesar las disponibilidades
+    @PostMapping("/update/availability")
+    public String updateAvailability(@RequestParam Map<String, String> availabilityData,
+            RedirectAttributes redirectAttributes) {
+        try {
+            // Mapear las disponibilidades
+            Map<Integer, Availability> availabilitiesToSave = new HashMap<>();
+
             for (Map.Entry<String, String> entry : availabilityData.entrySet()) {
                 if (entry.getKey().startsWith("availabilities")) {
-                    // Extraer datos de disponibilidad del formulario
+                    // Extraer el ID de la semana y procesar cada disponibilidad
                     String[] keys = entry.getKey().split("\\.");
                     if (keys.length == 3 && keys[2].equals("week.id")) {
                         Integer weekId = Integer.valueOf(entry.getValue());
@@ -241,32 +253,43 @@ public class ProfileController {
                         Long untilHourId = Long.valueOf(
                                 availabilityData.getOrDefault("availabilities[" + weekId + "].untilHour.id", "0"));
 
-                        // Validar Week y Hour
+                        // Validar que las horas sean válidas
                         Optional<Hour> fromHour = hourService.findById(fromHourId);
                         Optional<Hour> untilHour = hourService.findById(untilHourId);
+                        Optional<Week> week = weekService.findById(weekId);
 
-                        if (fromHour.isPresent() && untilHour.isPresent()) {
+                        if (week.isPresent() && fromHour.isPresent() && untilHour.isPresent()) {
+                            // Crear la disponibilidad si todos los datos son válidos
                             Availability availability = new Availability();
-                            availability.setProvider(provider);
-                            availability.setWeek(weekService.findById(weekId)); // Asegúrate de que este método devuelva
-                                                                                // un `Optional`
-
+                            availability.setWeek(week.get());
                             availability.setFromHour(fromHour.get());
                             availability.setUntilHour(untilHour.get());
 
-                            // Guardar o actualizar disponibilidad
-                            availabilityService.saveAvailability(availability);
+                            availabilitiesToSave.put(weekId, availability);
+                        } else {
+                            // Agregar un mensaje si hay un dato inválido
+                            redirectAttributes.addFlashAttribute("errorMessage",
+                                    "Datos inválidos para la semana " + weekId
+                                            + ". Verifique las horas y los datos ingresados.");
+                            return "redirect:/profile";
                         }
                     }
                 }
             }
 
-            redirectAttributes.addFlashAttribute("successMessage", "Perfil actualizado correctamente");
+            // Guardar todas las disponibilidades
+            for (Availability availability : availabilitiesToSave.values()) {
+                availabilityService.saveAvailability(availability);
+            }
+
+            redirectAttributes.addFlashAttribute("successMessage", "Disponibilidad actualizada correctamente.");
             return "redirect:/profile";
+
         } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar el perfil: " + e.getMessage());
-            return "redirect:/edit_profile";
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Error al actualizar la disponibilidad: " + e.getMessage());
+            return "redirect:/profile";
         }
     }
 

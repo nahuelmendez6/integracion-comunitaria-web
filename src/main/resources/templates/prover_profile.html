@@ -184,7 +184,45 @@
 
     <!-- Modal para editar disponibilidad (placeholder) -->
     <div class="modal fade" id="editAvailabilityModal" tabindex="-1" aria-labelledby="editAvailabilityModalLabel" aria-hidden="true">
-        <!-- Contenido del modal -->
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProviderModalLabel">Editar disponibilidad</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="profile-form" action="/update/availability" method="POST">
+                        <th:block th:each="week : ${weeks}">
+                            <div>
+                                <label th:text="${week.name}"></label>
+                                <input type="hidden" th:name="'availabilities[' + ${week.idWeek} + '].week.id'" th:value="${week.idWeek}" />
+                                
+                                <div>
+                                    <label>Desde</label>
+                                    <select th:name="'availabilities[' + ${week.idWeek} + '].fromHour.id'">
+                                        <option value="">Seleccione</option>
+                                        <th:block th:each="hour : ${hours}">
+                                            <option th:value="${hour.idHour}" th:text="${hour.name}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label>Hasta</label>
+                                    <select th:name="'availabilities[' + ${week.idWeek} + '].untilHour.id'">
+                                        <option value="">Seleccione</option>
+                                        <th:block th:each="hour : ${hours}">
+                                            <option th:value="${hour.idHour}" th:text="${hour.name}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+                        </th:block>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal para editar zona (placeholder) -->

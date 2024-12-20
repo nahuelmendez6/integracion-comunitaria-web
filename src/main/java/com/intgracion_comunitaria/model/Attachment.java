@@ -10,50 +10,51 @@ public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_attachment")
-    private Integer idAttachment;
+    private Long idAttachment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_petition", referencedColumnName = "id_petition", nullable = false)
-    private Petition petition;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_portfolio", referencedColumnName = "id_portfolio", nullable = false)
+    @JoinColumn(name = "id_portfolio", nullable = false)
     private Portfolio portfolio;
 
-    @Column(name = "name", length = 255, nullable = false)
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
 
-    @Column(name = "path", length = 4000, nullable = false)
+    @Column(name = "path", nullable = false, length = 4000)
     private String path;
-
-    @Column(name = "id_user_update", nullable = false)
-    private Integer idUserUpdate;
 
     @Column(name = "id_user_create", nullable = false)
     private Integer idUserCreate;
 
-    @Column(name = "date_create", nullable = false, updatable = false, insertable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime dateCreate;
+    @Column(name = "id_user_update", nullable = false)
+    private Integer idUserUpdate;
 
-    @Column(name = "date_update", nullable = false, insertable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime dateUpdate;
+    @Column(name = "date_create")
+    private LocalDateTime dateCreate = LocalDateTime.now();
 
-    // Getters y Setters
+    @Column(name = "date_update")
+    private LocalDateTime dateUpdate = LocalDateTime.now();
 
-    public Integer getIdAttachment() {
+    public Attachment() {
+    }
+
+    public Attachment(Long idAttachment, Portfolio portfolio, String name, String path, Integer idUserCreate,
+            Integer idUserUpdate, LocalDateTime dateCreate, LocalDateTime dateUpdate) {
+        this.idAttachment = idAttachment;
+        this.portfolio = portfolio;
+        this.name = name;
+        this.path = path;
+        this.idUserCreate = idUserCreate;
+        this.idUserUpdate = idUserUpdate;
+        this.dateCreate = dateCreate;
+        this.dateUpdate = dateUpdate;
+    }
+
+    public Long getIdAttachment() {
         return idAttachment;
     }
 
-    public void setIdAttachment(Integer idAttachment) {
+    public void setIdAttachment(Long idAttachment) {
         this.idAttachment = idAttachment;
-    }
-
-    public Petition getPetition() {
-        return petition;
-    }
-
-    public void setPetition(Petition petition) {
-        this.petition = petition;
     }
 
     public Portfolio getPortfolio() {
@@ -80,20 +81,20 @@ public class Attachment {
         this.path = path;
     }
 
-    public Integer getIdUserUpdate() {
-        return idUserUpdate;
-    }
-
-    public void setIdUserUpdate(Integer idUserUpdate) {
-        this.idUserUpdate = idUserUpdate;
-    }
-
     public Integer getIdUserCreate() {
         return idUserCreate;
     }
 
     public void setIdUserCreate(Integer idUserCreate) {
         this.idUserCreate = idUserCreate;
+    }
+
+    public Integer getIdUserUpdate() {
+        return idUserUpdate;
+    }
+
+    public void setIdUserUpdate(Integer idUserUpdate) {
+        this.idUserUpdate = idUserUpdate;
     }
 
     public LocalDateTime getDateCreate() {
@@ -111,4 +112,7 @@ public class Attachment {
     public void setDateUpdate(LocalDateTime dateUpdate) {
         this.dateUpdate = dateUpdate;
     }
+
+    // Getters y setters
+
 }
