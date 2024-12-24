@@ -20,7 +20,7 @@ public class PortfolioService {
     }
 
     public List<Portfolio> getPortfoliosProvider(Integer providerId) {
-        return portfolioRepository.findByProviderId(providerId);
+        return portfolioRepository.findByProvider_IdProvider(providerId);
     }
 
     public Portfolio createPortfolio(Portfolio portfolio) {

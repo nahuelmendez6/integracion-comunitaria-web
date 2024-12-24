@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Gestión de Portfolios</h1>
+        <form action="/new/portfolio" method="post" th:object="${portfolio}" enctype="multipart/form-data">
+            <div>
+                <label for="name">Nombre del Portfolio:</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="Nombre del portfolio" required />
+            </div>
+            <div>
+                <label for="description">Descripción:</label>
+                <textarea id="description" th:field="*{description}" placeholder="Descripción del portfolio"></textarea>
+            </div>
+            <div>
+                <label for="files">Subir archivos:</label>
+                <input type="file" name="images" id="files" multiple />
+            </div>
+            <button type="submit">Crear Portfolio</button>
+        </form>
+        
+        
+       
+</body>
+</html>

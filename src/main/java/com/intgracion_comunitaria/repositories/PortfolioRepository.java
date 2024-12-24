@@ -8,6 +8,6 @@ import com.intgracion_comunitaria.model.Portfolio;
 
 public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
 
-    List<Portfolio> findByProviderId(Integer providerId);
+    List<Portfolio> findByProvider_IdProvider(Integer providerId);
 
 }

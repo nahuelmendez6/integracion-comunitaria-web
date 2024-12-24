@@ -43,12 +43,6 @@ public class AttachmentController {
         return attachmentService.getAttachmentsByPortfolio(portfolioId);
     }
 
-    // Agregar un adjunto (sin archivo)
-    @PostMapping
-    public Attachment addAttachment(@RequestBody Attachment attachment) {
-        return attachmentService.addAttachment(attachment);
-    }
-
     // Subir un archivo y asociarlo a un portafolio
     @PostMapping("provider/portfolio/upload")
     public Attachment uploadFile(

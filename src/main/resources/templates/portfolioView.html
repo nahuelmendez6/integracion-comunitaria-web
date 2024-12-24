@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Portfolio</title>
+</head>
+<body>
+
+    <h1>Portfolio: <span th:text="${portfolio.name}"></span></h1>
+    
+    <h2>Archivos Adjuntos:</h2>
+    <div th:each="attachment : ${portfolio.attachments}">
+        <p th:text="${attachment.name}"></p>
+        
+        <span th:if="${attachment.fileType == 'image'}">
+            <img th:src="@{'/uploads/' + ${attachment.path}}" alt="Imagen adjunta" width="100" />
+        </span>
+
+        <span th:if="${attachment.fileType == 'pdf'}">
+            <a th:href="@{${attachment.path}}" target="_blank">Ver PDF</a>
+        </span>
+
+        <!-- Otros tipos de archivo -->
+    </div>
+
+</body>
+</html>

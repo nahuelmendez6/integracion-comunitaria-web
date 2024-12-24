@@ -5,7 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.sql.Date;
+import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Portfolio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_portfolio")
-    private Long idPortfolio;
+    private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -47,9 +48,9 @@ public class Portfolio {
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attachment> attachments = new ArrayList<>();
 
-    public Portfolio(Long idPortfolio, String name, String description, Provider provider, Integer idUserCreate,
+    public Portfolio(Long id, String name, String description, Provider provider, Integer idUserCreate,
             Integer idUserUpdate, Date dateCreate, Date dateUpdate, List<Attachment> attachments) {
-        this.idPortfolio = idPortfolio;
+        this.id = id;
         this.name = name;
         this.description = description;
         this.provider = provider;
@@ -64,11 +65,11 @@ public class Portfolio {
     }
 
     public Long getIdPortfolio() {
-        return idPortfolio;
+        return id;
     }
 
-    public void setIdPortfolio(Long idPortfolio) {
-        this.idPortfolio = idPortfolio;
+    public void setIdPortfolio(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -134,7 +135,4 @@ public class Portfolio {
     public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
     }
-
-    // Getters y setters
-
 }

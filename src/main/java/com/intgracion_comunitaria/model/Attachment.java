@@ -1,10 +1,10 @@
 package com.intgracion_comunitaria.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
-@Table(name = "attachment")
+@Table(name = "attachment_portfolio")
 public class Attachment {
 
     @Id
@@ -22,23 +22,28 @@ public class Attachment {
     @Column(name = "path", nullable = false, length = 4000)
     private String path;
 
-    @Column(name = "id_user_create", nullable = false)
+    @Column(name = "id_user_create", nullable = true)
     private Integer idUserCreate;
 
-    @Column(name = "id_user_update", nullable = false)
+    @Column(name = "id_user_update", nullable = true)
     private Integer idUserUpdate;
 
     @Column(name = "date_create")
-    private LocalDateTime dateCreate = LocalDateTime.now();
+    @Temporal(TemporalType.DATE)
+    private Date dateCreate;
 
     @Column(name = "date_update")
-    private LocalDateTime dateUpdate = LocalDateTime.now();
+    @Temporal(TemporalType.DATE)
+    private Date dateUpdate;
+
+    @Column(name = "file_type")
+    private String filetype;
 
     public Attachment() {
     }
 
     public Attachment(Long idAttachment, Portfolio portfolio, String name, String path, Integer idUserCreate,
-            Integer idUserUpdate, LocalDateTime dateCreate, LocalDateTime dateUpdate) {
+            Integer idUserUpdate, Date dateCreate, Date dateUpdate, String filetype) {
         this.idAttachment = idAttachment;
         this.portfolio = portfolio;
         this.name = name;
@@ -47,6 +52,7 @@ public class Attachment {
         this.idUserUpdate = idUserUpdate;
         this.dateCreate = dateCreate;
         this.dateUpdate = dateUpdate;
+        this.filetype = filetype;
     }
 
     public Long getIdAttachment() {
@@ -97,20 +103,28 @@ public class Attachment {
         this.idUserUpdate = idUserUpdate;
     }
 
-    public LocalDateTime getDateCreate() {
+    public Date getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(LocalDateTime dateCreate) {
+    public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
     }
 
-    public LocalDateTime getDateUpdate() {
+    public Date getDateUpdate() {
         return dateUpdate;
     }
 
-    public void setDateUpdate(LocalDateTime dateUpdate) {
+    public void setDateUpdate(Date dateUpdate) {
         this.dateUpdate = dateUpdate;
+    }
+
+    public String getFileType() {
+        return filetype;
+    }
+
+    public void setFileType(String fileType) {
+        this.filetype = fileType;
     }
 
     // Getters y setters
